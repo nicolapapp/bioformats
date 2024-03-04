@@ -79,6 +79,7 @@ public class SlideBook7Reader  extends FormatReader {
     public static Logger LOGGER =
         LoggerFactory.getLogger(SlideBook7Reader.class);
 
+    // type of ROI annotations supported
     enum EGraphicType {
           ePoint,
           eLine,
@@ -2987,6 +2988,7 @@ public class SlideBook7Reader  extends FormatReader {
                     CImageGroup theCurrentImageGroup = mDataLoader.GetImageGroup(capture);
                     // annotation roi's
 
+                    setSeries(capture);
                     int theAnnoSize = theCurrentImageGroup.mAnnotationList.size();
                     for(int theAnnoIndex = 0; theAnnoIndex < theAnnoSize; theAnnoIndex++)
                     {
@@ -2994,6 +2996,7 @@ public class SlideBook7Reader  extends FormatReader {
                         for(int theCubeIndex=0; theCubeIndex < theAnno.mCubeAnnotationList.size(); theCubeIndex++)
                         {
                             CCubeAnnotation70 theCubeAnno = theAnno.mCubeAnnotationList.get(theCubeIndex);
+                            SlideBook7Reader.LOGGER.debug("about to add annotation for capture " + capture + "roiManagerRoiIndex: " + roiManagerRoiIndex);
                             roiManagerRoiIndex = addAnnotation(store,theCubeAnno.mAnn,capture,theCubeAnno.mRegionIndex,roiManagerRoiIndex);
                         }
                     }
